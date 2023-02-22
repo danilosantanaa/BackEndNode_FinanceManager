@@ -2,14 +2,27 @@ const { prisma } = require("../services/prisma")
 
 exports.createUser = async (data) => {
     const user = await prisma.user.create({
-        data
+        data,
+        select: {
+            id: true,
+            name: true,
+            email: true,
+            password: false
+        }
     });
 
     return user;
 }
 
 exports.getUsers = async () => {
-    const users = await prisma.user.findMany({});
+    const users = await prisma.user.findMany({
+        select: {
+            id: true,
+            name: true,
+            email: true,
+            password: false
+        }
+    });
 
     return users;
 };
@@ -17,7 +30,14 @@ exports.getUsers = async () => {
 exports.getById = async (id) => {
     const user = prisma.user.findUnique({
         where: {
-            id
+            id,
+        },
+
+        select: {
+            id: true,
+            name: true,
+            email: true,
+            password: false
         }
     });
 
@@ -29,6 +49,12 @@ exports.updateUser = async (id, data) => {
         data,
         where: {
             id
+        },
+        select: {
+            id: true,
+            name: true,
+            email: true,
+            password: false
         }
    });
 
